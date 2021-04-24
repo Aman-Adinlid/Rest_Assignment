@@ -62,7 +62,7 @@ public class LoanRepositoryTest {
         loan = new Loan();
         loan.setLoanTaker(libraryUser);
         loan.setBook(book);
-        loan.setLoanDate(LocalDate.of(2021, 04, 24));
+        loan.setLoanDate(LocalDate.of(2021, 4, 24));
         loan.setTerminated(true);
         loanRepository.save(loan);
 
