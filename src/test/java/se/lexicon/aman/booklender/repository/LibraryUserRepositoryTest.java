@@ -47,7 +47,7 @@ public class LibraryUserRepositoryTest {
 
     @Test
     @DisplayName("Test2")
-    public void test2_findAll() {
+    public void test2_findAll_save() {
         List<LibraryUser> libraryUserList = new ArrayList<>();
         libraryUserRepository.findAll().iterator().forEachRemaining(libraryUserList::add);
         assertEquals(1, libraryUserList.size());
