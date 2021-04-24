@@ -80,7 +80,7 @@ public class BookRepositoryTest {
 
     @Test
     @DisplayName("Test6")
-    public void test4_findByTitle() {
+    public void test6_findByTitle() {
         assertEquals(20, bookRepository.findByTitle("The sun is also a star").get(0).getMaxLoanDays());
     }
 }
