@@ -83,6 +83,7 @@ public class BookServiceImpl implements BookService {
         //  if (bookId < 1) throw new IllegalArgumentException("The id is not null");
         // bookRepository.delete(modelMapper.map(bookRepository.findById(bookId).orElseThrow(() ->
         //   new DateTimeException("Id is not found")), Book.class));
+        //
         return false;
     }
 }
