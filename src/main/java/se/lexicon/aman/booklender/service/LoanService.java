@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface LoanService {
 
-    LoanDto findById(int loanId);
+    LoanDto findById(Long loanId);
 
     List<LoanDto> findByBook(int bookId);
 
     List<LoanDto> findByUserId(int userId);
 
-    List<LoanDto> findByTerminated();
+    List<LoanDto> findByTerminated(boolean terminated);
 
     List<LoanDto> findAll();
 
