@@ -64,9 +64,9 @@ public class LoanServiceImpl implements LoanService {
     public List<LoanDto> findByUserId(int userId) {
         if (userId < 1) throw new IllegalArgumentException("The field is empty");
         List<Loan> loanList = new ArrayList<>();
-        loanRepository.findLoanByBook_BookId(userId).iterator().forEachRemaining(loanList::add);
+        loanRepository.findByLoanTakerUserId(userId).iterator().forEachRemaining(loanList::add);
 
-        List<LoanDto> loanDtoList = loanRepository.findLoanByBook_BookId(userId)
+        List<LoanDto> loanDtoList = loanRepository.findByLoanTakerUserId(userId)
                 .stream().map(book -> modelMapper.map(book, LoanDto.class)).collect(Collectors.toList());
         return loanDtoList;
     }
@@ -74,7 +74,7 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public List<LoanDto> findByTerminated(boolean terminated) {
         return loanRepository.findByTerminated(terminated)
-                .stream().map(book -> modelMapper.map(book, LoanDto.class)).collect(Collectors.toList());
+                .stream().map(loan -> modelMapper.map(loan, LoanDto.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -84,6 +84,7 @@ public class LoanServiceImpl implements LoanService {
         return list.stream().map(loan -> modelMapper.map(loan, LoanDto.class)).collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public LoanDto create(LoanDto loanDto) {
         return modelMapper.map(loanRepository.save(modelMapper.map(loanDto, Loan.class)), LoanDto.class);
