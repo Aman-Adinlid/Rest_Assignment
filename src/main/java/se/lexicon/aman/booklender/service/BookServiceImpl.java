@@ -3,6 +3,7 @@ package se.lexicon.aman.booklender.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.aman.booklender.dto.BookDto;
 import se.lexicon.aman.booklender.entity.Book;
 import se.lexicon.aman.booklender.exception.DataNotFoundException;
@@ -65,6 +66,7 @@ public class BookServiceImpl implements BookService {
         return modelMapper.map(bookRepository.save(modelMapper.map(bookDto, Book.class)), BookDto.class);
     }
 
+    @Transactional
     @Override
     public BookDto update(BookDto bookDto) throws DataNotFoundException {
         if (bookDto == null) throw new IllegalArgumentException("BookDto object should not be null");
@@ -79,12 +81,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean delete(int bookId) throws DataNotFoundException {
-        //  if (bookId < 1) throw new IllegalArgumentException("The id is not null");
-        // bookRepository.delete(modelMapper.map(bookRepository.findById(bookId).orElseThrow(() ->
-        //   new DateTimeException("Id is not found")), Book.class));
-        //
-        return false;
+    public void delete(int bookId) throws DataNotFoundException {
+        if (bookId < 1) throw new IllegalArgumentException("Id is not valid");
+        bookRepository.delete(modelMapper.map(bookRepository.findById(bookId)
+                .orElseThrow(() -> new DataNotFoundException("Id ")), Book.class));
     }
 }
 

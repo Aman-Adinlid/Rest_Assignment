@@ -20,6 +20,6 @@ public interface BookService {
 
     BookDto update(BookDto bookDto) throws DataNotFoundException;
 
-    boolean delete(int bookId) throws DataNotFoundException;
+    void delete(int bookId) throws DataNotFoundException;
 
 }
