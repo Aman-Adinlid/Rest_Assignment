@@ -21,5 +21,5 @@ public interface LoanService {
 
     LoanDto update(LoanDto loanDto) throws DataNotFoundException;
 
-    boolean delete(int loanId) throws DataNotFoundException;
+    void delete(long loanId) throws DataNotFoundException;
 }
