@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.aman.booklender.dto.LibraryUserDto;
 import se.lexicon.aman.booklender.entity.LibraryUser;
 import se.lexicon.aman.booklender.exception.DataNotFoundException;
@@ -54,7 +55,7 @@ public class LibraryUserServiceImpl implements LibraryUserService {
         return modelMapper.map(libraryUserRepository.save(modelMapper.map(libraryUserDto, LibraryUser.class)), LibraryUserDto.class);
     }
 
-
+    @Transactional
     @Override
     public LibraryUserDto update(LibraryUserDto libraryUserDto) throws DataAccessException, DataNotFoundException {
         if (libraryUserDto == null) throw new IllegalArgumentException("LibraryUserDto object should not be null");
