@@ -51,7 +51,7 @@ public class LoanServiceImplTest {
         bookDto.setReserved(false);
         bookDto.setMaxLoanDays(20);
         bookDto.setFinePerDay(BigDecimal.ZERO);
-
+      //create it
         bookService.create(bookDto);
 
         libraryUserDto = new LibraryUserDto();
