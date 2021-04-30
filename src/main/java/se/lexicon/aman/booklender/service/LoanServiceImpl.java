@@ -44,7 +44,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public LoanDto findById(Long loanId) throws DataNotFoundException {
+    public LoanDto findById(long loanId) throws DataNotFoundException {
         if (loanId == 0) throw new IllegalArgumentException("Id should not be empty");
         return modelMapper.map(loanRepository.findById(loanId).orElseThrow(() ->
                 new DataNotFoundException("LoanDto not found")), LoanDto.class);

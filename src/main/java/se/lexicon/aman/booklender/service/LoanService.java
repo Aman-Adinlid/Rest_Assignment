@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LoanService {
 
-    LoanDto findById(Long loanId) throws DataNotFoundException;
+    LoanDto findById(long loanId) throws DataNotFoundException;
 
     List<LoanDto> findByBook(int bookId);
 
