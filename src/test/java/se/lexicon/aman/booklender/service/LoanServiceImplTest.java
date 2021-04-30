@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class LoanServiceTest {
+public class LoanServiceImplTest {
     LoanService loanService;
     LoanDto loanDto;
     LoanDto dto;
