@@ -117,7 +117,7 @@ public class LoanServiceImplTest {
 
     @Test
     @DisplayName("Test7 ")
-    public void test7_update() throws DataNotFoundException {
+    public void test7_delete() throws DataNotFoundException {
         loanService.create(loanDto);
         loanService.delete(1);
         assertEquals(1, loanService.findAll().size());
