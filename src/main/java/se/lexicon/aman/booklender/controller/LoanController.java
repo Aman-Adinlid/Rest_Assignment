@@ -1,0 +1,49 @@
+package se.lexicon.aman.booklender.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import se.lexicon.aman.booklender.dto.LoanDto;
+import se.lexicon.aman.booklender.exception.DataNotFoundException;
+import se.lexicon.aman.booklender.service.LoanService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/loan/")
+public class LoanController {
+    LoanService loanService;
+
+    @Autowired
+    public void setLoanService(LoanService loanService) {
+        this.loanService = loanService;
+    }
+
+
+    @GetMapping
+    public ResponseEntity<List<LoanDto>> findAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(loanService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LoanDto> findById(@PathVariable("id") long loanId) throws DataNotFoundException {
+        return ResponseEntity.status(HttpStatus.OK).body(loanService.findById(loanId));
+    }
+
+    @PostMapping
+    public ResponseEntity<LoanDto> create(@RequestBody LoanDto loanDto) {
+        if (loanDto == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(loanService.create(loanDto));
+    }
+
+    @PutMapping
+    public ResponseEntity<LoanDto> update(@RequestBody LoanDto loanDto) throws DataNotFoundException {
+        if (loanDto == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(loanService.update(loanDto));
+    }
+}
