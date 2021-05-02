@@ -29,8 +29,8 @@ public class LibraryUserController {
 
     @GetMapping("/")
     public ResponseEntity<List<LibraryUserDto>> findAll() {
-        List<LibraryUserDto> libraryUserDtoList = libraryUserService.findAll();
-        return ResponseEntity.ok(libraryUserDtoList);
+        return ResponseEntity.status(HttpStatus.OK).body(libraryUserService.findAll());
+
     }
 
     @GetMapping("/email")
