@@ -27,7 +27,7 @@ public class LibraryUserController {
         return ResponseEntity.status(HttpStatus.OK).body(libraryUserService.findById(userId));
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<LibraryUserDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(libraryUserService.findAll());
 
