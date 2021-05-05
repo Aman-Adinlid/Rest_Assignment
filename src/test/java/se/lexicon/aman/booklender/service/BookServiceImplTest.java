@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import se.lexicon.aman.booklender.dto.BookDto;
-import se.lexicon.aman.booklender.exception.DataNotFoundException;
+import se.lexicon.aman.booklender.exception.RecordNotFoundException;
 
 import java.math.BigDecimal;
 
@@ -64,7 +64,7 @@ public class BookServiceImplTest {
 
     @Test
     @DisplayName("Test4 ")
-    public void test4_findById() throws DataNotFoundException {
+    public void test4_findById() throws RecordNotFoundException {
         assertEquals(1, bookService.findById(1).getBookId());
     }
 
@@ -82,14 +82,14 @@ public class BookServiceImplTest {
 
     @Test
     @DisplayName("Test7 ")
-    public void test7_update() throws DataNotFoundException {
+    public void test7_update() throws RecordNotFoundException {
         bookDto.setBookId(1);
         assertEquals(20, bookService.update(bookDto).getMaxLoanDays());
     }
 
     @Test
     @DisplayName("Test8 ")
-    public void test8_delete() throws DataNotFoundException {
+    public void test8_delete() throws RecordNotFoundException {
         bookService.create(bookDto);
         bookService.delete(1);
         assertEquals(1, bookService.findAll().size());

@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import se.lexicon.aman.booklender.dto.BookDto;
 import se.lexicon.aman.booklender.dto.LibraryUserDto;
 import se.lexicon.aman.booklender.dto.LoanDto;
-import se.lexicon.aman.booklender.exception.DataNotFoundException;
+import se.lexicon.aman.booklender.exception.RecordNotFoundException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -78,7 +78,7 @@ public class LoanServiceImplTest {
 
     @Test
     @DisplayName("Test1 ")
-    public void test1_findById() throws DataNotFoundException {
+    public void test1_findById() throws RecordNotFoundException {
         assertEquals(1, loanService.findById(1).getLoanId());
     }
 
@@ -117,7 +117,7 @@ public class LoanServiceImplTest {
 
     @Test
     @DisplayName("Test7 ")
-    public void test7_delete() throws DataNotFoundException {
+    public void test7_delete() throws RecordNotFoundException {
         loanService.create(loanDto);
         loanService.delete(1);
         assertEquals(1, loanService.findAll().size());

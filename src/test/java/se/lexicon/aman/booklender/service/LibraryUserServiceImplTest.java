@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import se.lexicon.aman.booklender.dto.LibraryUserDto;
-import se.lexicon.aman.booklender.exception.DataNotFoundException;
+import se.lexicon.aman.booklender.exception.RecordNotFoundException;
 
 import java.time.LocalDate;
 
@@ -39,7 +39,7 @@ public class LibraryUserServiceImplTest {
 
     @Test
     @DisplayName("Test1 ")
-    public void test1_findById() {
+    public void test1_findById() throws RecordNotFoundException {
         assertEquals("Adam", libraryUserService.findById(1).getName());
     }
 
@@ -64,14 +64,14 @@ public class LibraryUserServiceImplTest {
 
     @Test
     @DisplayName("Test5 ")
-    public void test5_update() throws DataNotFoundException {
+    public void test5_update() throws RecordNotFoundException {
         userDto.setUserId(1);
         assertEquals("Aman", libraryUserService.update(userDto).getName());
     }
 
     @Test
     @DisplayName("Test6 ")
-    public void test6_delete() throws DataNotFoundException {
+    public void test6_delete() throws RecordNotFoundException{
         libraryUserService.create(userDto);
         libraryUserService.delete(1);
         assertEquals(1, libraryUserService.findAll().size());
