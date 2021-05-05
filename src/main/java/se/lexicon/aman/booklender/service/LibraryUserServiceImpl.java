@@ -2,12 +2,12 @@ package se.lexicon.aman.booklender.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.aman.booklender.dto.LibraryUserDto;
 import se.lexicon.aman.booklender.entity.LibraryUser;
-import se.lexicon.aman.booklender.exception.DataNotFoundException;
+import se.lexicon.aman.booklender.exception.ArgumentException;
+import se.lexicon.aman.booklender.exception.RecordNotFoundException;
 import se.lexicon.aman.booklender.repository.LibraryUserRepository;
 
 import java.time.DateTimeException;
@@ -32,7 +32,7 @@ public class LibraryUserServiceImpl implements LibraryUserService {
     }
 
     @Override
-    public LibraryUserDto findById(int userId) throws DataAccessException {
+    public LibraryUserDto findById(int userId) throws RecordNotFoundException {
         return modelMapper.map(libraryUserRepository.findById(userId).orElseThrow(() ->
                 new DateTimeException("LibraryUserDto not found")), LibraryUserDto.class);
     }
@@ -57,21 +57,21 @@ public class LibraryUserServiceImpl implements LibraryUserService {
 
     @Transactional
     @Override
-    public LibraryUserDto update(LibraryUserDto libraryUserDto) throws DataAccessException, DataNotFoundException {
-        if (libraryUserDto == null) throw new IllegalArgumentException("LibraryUserDto object should not be null");
+    public LibraryUserDto update(LibraryUserDto libraryUserDto) throws RecordNotFoundException {
+        if (libraryUserDto == null) throw new ArgumentException("LibraryUserDto object should not be null");
         if (libraryUserDto.getUserId() < 1) throw new IllegalArgumentException("Id should not be null");
         Optional<LibraryUser> optionalLibraryUser = libraryUserRepository.findById(modelMapper.map(libraryUserDto, LibraryUser.class).getUserId());
         if (optionalLibraryUser.isPresent()) {
             return modelMapper.map(libraryUserRepository.save(modelMapper.map(libraryUserDto, LibraryUser.class)), LibraryUserDto.class);
-        } else throw new DataNotFoundException("LibraryUserDto not found");
+        } else throw new RecordNotFoundException("LibraryUserDto not found");
     }
 
 
     @Override
-    public void delete(int userId) throws DataAccessException, DataNotFoundException {
-        if (userId < 1) throw new IllegalArgumentException("Id is not valid");
+    public void delete(int userId) throws RecordNotFoundException {
+        if (userId < 1) throw new ArgumentException("Id is not valid");
         libraryUserRepository.delete(modelMapper.map(libraryUserRepository.findById(userId)
-                .orElseThrow(() -> new DataNotFoundException("Id ")), LibraryUser.class));
+                .orElseThrow(() -> new RecordNotFoundException("Id ")), LibraryUser.class));
 
     }
 
