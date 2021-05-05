@@ -49,7 +49,8 @@ public class BookController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<BookDto>> find(@RequestParam(value = "title", required = false) String title, @RequestParam(value = "available", required = false) boolean available,
+    public ResponseEntity<List<BookDto>> find(@RequestParam(value = "title", required = false) String title,
+                                              @RequestParam(value = "available", required = false) boolean available,
                                               @RequestParam(value = "reserved", required = false) boolean reserved) {
         List<BookDto> findByTitle = bookService.findByTitle(title);
         List<BookDto> findByAvailable = bookService.findByAvailable(available);
