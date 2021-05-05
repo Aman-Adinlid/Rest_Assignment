@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.lexicon.aman.booklender.dto.LibraryUserDto;
-import se.lexicon.aman.booklender.exception.DataNotFoundException;
+import se.lexicon.aman.booklender.exception.RecordNotFoundException;
 import se.lexicon.aman.booklender.service.LibraryUserService;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class LibraryUserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LibraryUserDto> findById(@PathVariable("id") Integer userId) {
+    public ResponseEntity<LibraryUserDto> findById(@PathVariable("id") Integer userId) throws RecordNotFoundException {
         if (userId == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         return ResponseEntity.status(HttpStatus.OK).body(libraryUserService.findById(userId));
     }
@@ -47,7 +47,7 @@ public class LibraryUserController {
     }
 
     @PutMapping
-    public ResponseEntity<LibraryUserDto> update(@RequestBody LibraryUserDto libraryUserDto) throws DataNotFoundException {
+    public ResponseEntity<LibraryUserDto> update(@RequestBody LibraryUserDto libraryUserDto) throws RecordNotFoundException {
         if (libraryUserDto == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

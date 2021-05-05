@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.lexicon.aman.booklender.dto.LoanDto;
-import se.lexicon.aman.booklender.exception.DataNotFoundException;
+import se.lexicon.aman.booklender.exception.RecordNotFoundException;
 import se.lexicon.aman.booklender.service.LoanService;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class LoanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LoanDto> findById(@PathVariable("id") long loanId) throws DataNotFoundException {
+    public ResponseEntity<LoanDto> findById(@PathVariable("id") long loanId) throws RecordNotFoundException {
         return ResponseEntity.status(HttpStatus.OK).body(loanService.findById(loanId));
     }
 
@@ -40,7 +40,7 @@ public class LoanController {
     }
 
     @PutMapping
-    public ResponseEntity<LoanDto> update(@RequestBody LoanDto loanDto) throws DataNotFoundException {
+    public ResponseEntity<LoanDto> update(@RequestBody LoanDto loanDto) throws RecordNotFoundException {
         if (loanDto == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
