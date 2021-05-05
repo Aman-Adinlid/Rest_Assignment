@@ -8,6 +8,7 @@ import se.lexicon.aman.booklender.dto.BookDto;
 import se.lexicon.aman.booklender.exception.RecordNotFoundException;
 import se.lexicon.aman.booklender.service.BookService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<BookDto> create(@RequestBody BookDto bookDto) {
+    public ResponseEntity<BookDto> create(@RequestBody @Valid BookDto bookDto) {
         if (bookDto == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -41,7 +42,7 @@ public class BookController {
     }
 
     @PutMapping
-    public ResponseEntity<BookDto> update(@RequestBody BookDto bookDto) throws RecordNotFoundException {
+    public ResponseEntity<BookDto> update(@RequestBody @Valid BookDto bookDto) throws RecordNotFoundException {
         if (bookDto == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

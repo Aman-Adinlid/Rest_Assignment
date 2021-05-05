@@ -8,6 +8,7 @@ import se.lexicon.aman.booklender.dto.LibraryUserDto;
 import se.lexicon.aman.booklender.exception.RecordNotFoundException;
 import se.lexicon.aman.booklender.service.LibraryUserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,7 +40,7 @@ public class LibraryUserController {
     }
 
     @PostMapping
-    public ResponseEntity<LibraryUserDto> create(@RequestBody LibraryUserDto libraryUserDto) {
+    public ResponseEntity<LibraryUserDto> create(@RequestBody @Valid LibraryUserDto libraryUserDto) {
         if (libraryUserDto == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -47,7 +48,7 @@ public class LibraryUserController {
     }
 
     @PutMapping
-    public ResponseEntity<LibraryUserDto> update(@RequestBody LibraryUserDto libraryUserDto) throws RecordNotFoundException {
+    public ResponseEntity<LibraryUserDto> update(@RequestBody @Valid LibraryUserDto libraryUserDto) throws RecordNotFoundException {
         if (libraryUserDto == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
