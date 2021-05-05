@@ -1,13 +1,13 @@
 package se.lexicon.aman.booklender.service;
 
 import se.lexicon.aman.booklender.dto.LoanDto;
-import se.lexicon.aman.booklender.exception.DataNotFoundException;
+import se.lexicon.aman.booklender.exception.RecordNotFoundException;
 
 import java.util.List;
 
 public interface LoanService {
 
-    LoanDto findById(long loanId) throws DataNotFoundException;
+    LoanDto findById(long loanId) throws RecordNotFoundException;
 
     List<LoanDto> findByBook(int bookId);
 
@@ -19,7 +19,7 @@ public interface LoanService {
 
     LoanDto create(LoanDto loanDto);
 
-    LoanDto update(LoanDto loanDto) throws DataNotFoundException;
+    LoanDto update(LoanDto loanDto) throws RecordNotFoundException;
 
-    void delete(long loanId) throws DataNotFoundException;
+    void delete(long loanId) throws RecordNotFoundException;
 }

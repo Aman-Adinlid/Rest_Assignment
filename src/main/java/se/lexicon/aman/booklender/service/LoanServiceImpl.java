@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.aman.booklender.dto.LoanDto;
 import se.lexicon.aman.booklender.entity.Loan;
-import se.lexicon.aman.booklender.exception.DataNotFoundException;
+import se.lexicon.aman.booklender.exception.ArgumentException;
+import se.lexicon.aman.booklender.exception.RecordNotFoundException;
 import se.lexicon.aman.booklender.repository.BookRepository;
 import se.lexicon.aman.booklender.repository.LibraryUserRepository;
 import se.lexicon.aman.booklender.repository.LoanRepository;
@@ -44,15 +45,15 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public LoanDto findById(long loanId) throws DataNotFoundException {
-        if (loanId == 0) throw new IllegalArgumentException("Id should not be empty");
+    public LoanDto findById(long loanId) throws RecordNotFoundException {
+        if (loanId == 0) throw new ArgumentException("Id should not be empty");
         return modelMapper.map(loanRepository.findById(loanId).orElseThrow(() ->
-                new DataNotFoundException("LoanDto not found")), LoanDto.class);
+                new RecordNotFoundException("LoanDto not found")), LoanDto.class);
     }
 
     @Override
     public List<LoanDto> findByBook(int bookId) {
-        if (bookId < 1) throw new IllegalArgumentException("bookId should not be null");
+        if (bookId < 1) throw new ArgumentException("bookId should not be null");
         List<Loan> loanList = new ArrayList<>();
         loanRepository.findLoanByBook_BookId(bookId).iterator().forEachRemaining(loanList::add);
         List<LoanDto> loanDtoList = loanRepository.findLoanByBook_BookId(bookId)
@@ -62,7 +63,7 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public List<LoanDto> findByUserId(int userId) {
-        if (userId < 1) throw new IllegalArgumentException("The field is empty");
+        if (userId < 1) throw new ArgumentException("The field is empty");
         List<Loan> loanList = new ArrayList<>();
         loanRepository.findByLoanTakerUserId(userId).iterator().forEachRemaining(loanList::add);
 
@@ -93,21 +94,21 @@ public class LoanServiceImpl implements LoanService {
 
     @Transactional
     @Override
-    public LoanDto update(LoanDto loanDto) throws DataNotFoundException {
-        if (loanDto == null) throw new IllegalArgumentException("BookDto object should not be null");
+    public LoanDto update(LoanDto loanDto) throws RecordNotFoundException {
+        if (loanDto == null) throw new ArgumentException("BookDto object should not be null");
         if (loanDto.getLoanId() < 1) throw new IllegalArgumentException("BookId should not be null");
         Optional<Loan> optionalLoan = loanRepository.findById(loanDto.getLoanId());
         if (optionalLoan.isPresent()) {
             return modelMapper.map(loanRepository.save(modelMapper.map(loanDto, Loan.class)), LoanDto.class);
         } else {
-            throw new DataNotFoundException("LoanDto not found");
+            throw new RecordNotFoundException("LoanDto not found");
         }
     }
 
     @Override
-    public void delete(long loanId) throws DataNotFoundException {
-        if (loanId < 1) throw new IllegalArgumentException("Id is not valid");
+    public void delete(long loanId) throws RecordNotFoundException {
+        if (loanId < 1) throw new ArgumentException("Id is not valid");
         loanRepository.delete(modelMapper.map(loanRepository.findById(loanId)
-                .orElseThrow(() -> new DataNotFoundException("Id ")), Loan.class));
+                .orElseThrow(() -> new RecordNotFoundException("Id ")), Loan.class));
     }
 }
